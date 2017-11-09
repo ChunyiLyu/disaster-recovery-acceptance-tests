@@ -16,12 +16,25 @@ set -eu -o pipefail
 : "${CF_ADMIN_USERNAME:="admin"}"
 : "${BOSH_ENVIRONMENT:?}"
 : "${SSH_DESTINATION_CIDR:="10.0.0.0/8"}"
-: "${NFS_SERVICE_NAME:?}"
-: "${NFS_PLAN_NAME:?}"
-: "${NFS_BROKER_USER:?}"
-: "${NFS_BROKER_PASSWORD:?}"
-: "${NFS_BROKER_URL:?}"
-
+# The following params are optional
+: "${NFS_SERVICE_NAME:=""}"
+: "${NFS_PLAN_NAME:=""}"
+: "${NFS_BROKER_USER:=""}"
+: "${NFS_BROKER_PASSWORD:=""}"
+: "${NFS_BROKER_URL:=""}"
+echo "Skipping the following"
+echo ${SKIP_SUITE_NAME}
+# if [ -z "${NFS_SERVICE_NAME+x}" ]; then
+#     echo "Skipping cf-nfsrboker testcase because NFS_SERVICE_NAME is not set"
+#     export SKIP_SUITE_NAME="${SKIP_SUITE_NAME} cf-nfsbroker"
+#     echo ${SKIP_SUITE_NAME}
+# else
+#     : "${NFS_SERVICE_NAME:?}"
+#     : "${NFS_PLAN_NAME:?}"
+#     : "${NFS_BROKER_USER:?}"
+#     : "${NFS_BROKER_PASSWORD:?}"
+#     : "${NFS_BROKER_URL:?}"
+# fi
 
 tmpdir="$( mktemp -d /tmp/run-drats.XXXXXXXXXX )"
 
